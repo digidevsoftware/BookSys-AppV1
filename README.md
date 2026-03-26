@@ -62,6 +62,11 @@ Then open:
 
 `http://localhost:8080`
 
+## tmux cheat sheet
+For day-to-day starting, stopping, and reconnecting to the app in tmux, see:
+
+`TMUX_CHEATSHEET.md`
+
 ## Project structure
 ```text
 src/main/java/digidevsoftware/shiftmanagementsystem
