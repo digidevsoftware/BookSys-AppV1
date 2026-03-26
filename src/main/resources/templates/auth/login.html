@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Shift Management System</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container narrow">
+    <div class="card">
+        <h1>Shift Management System</h1>
+        <p class="muted">Sign in with the seeded admin account to manage employees and shifts.</p>
+
+        <div th:if="${param.error}" class="alert error">Invalid username or password.</div>
+        <div th:if="${param.logout}" class="alert success">You have been logged out.</div>
+
+        <form th:action="@{/login}" method="post" class="form-grid">
+            <label>Username
+                <input type="text" name="username" required>
+            </label>
+            <label>Password
+                <input type="password" name="password" required>
+            </label>
+            <button type="submit">Sign in</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

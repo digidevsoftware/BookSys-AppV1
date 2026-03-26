@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shifts | Shift Management System</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/layout :: page(~{::section})}">
+    <section>
+        <div class="page-header">
+            <div>
+                <h1>Shifts</h1>
+                <p class="muted">Create and manage employee shift assignments.</p>
+            </div>
+            <a class="button-link" th:href="@{/shifts/new}">Add shift</a>
+        </div>
+
+        <div class="card">
+            <div th:if="${#lists.isEmpty(shifts)}" class="muted">No shifts added yet.</div>
+            <table th:unless="${#lists.isEmpty(shifts)}">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Type</th>
+                    <th>Employee</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="shift : ${shifts}">
+                    <td th:text="${shift.date}"></td>
+                    <td th:text="${shift.startTime}"></td>
+                    <td th:text="${shift.endTime}"></td>
+                    <td th:text="${shift.shiftType}"></td>
+                    <td th:text="${shift.employee.fullName}"></td>
+                    <td th:text="${shift.notes}"></td>
+                    <td class="action-row">
+                        <a th:href="@{'/shifts/edit/' + ${shift.id}}">Edit</a>
+                        <form th:action="@{'/shifts/delete/' + ${shift.id}}" method="post" onsubmit="return confirm('Delete this shift?');">
+                            <button type="submit" class="link-button danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' | Shift Management System'">Shift Form</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/layout :: page(~{::section})}">
+    <section>
+        <div class="page-header">
+            <div>
+                <h1 th:text="${pageTitle}">Shift Form</h1>
+                <p class="muted">Create or update an employee shift.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <form th:action="@{/shifts}" th:object="${shift}" method="post" class="form-grid">
+                <input type="hidden" th:field="*{id}">
+
+                <label>Date
+                    <input type="date" th:field="*{date}">
+                    <span class="field-error" th:errors="*{date}"></span>
+                </label>
+
+                <label>Start time
+                    <input type="time" th:field="*{startTime}">
+                    <span class="field-error" th:errors="*{startTime}"></span>
+                </label>
+
+                <label>End time
+                    <input type="time" th:field="*{endTime}">
+                    <span class="field-error" th:errors="*{endTime}"></span>
+                </label>
+
+                <label>Shift type
+                    <select th:field="*{shiftType}">
+                        <option th:each="type : ${shiftTypes}" th:value="${type}" th:text="${type}"></option>
+                    </select>
+                </label>
+
+                <label>Employee
+                    <select th:field="*{employee}">
+                        <option value="">Select an employee</option>
+                        <option th:each="employee : ${employees}" th:value="${employee.id}" th:text="${employee.fullName}"></option>
+                    </select>
+                    <span class="field-error" th:errors="*{employee}"></span>
+                </label>
+
+                <label class="full-width">Notes
+                    <textarea th:field="*{notes}" rows="4"></textarea>
+                </label>
+
+                <div class="form-actions">
+                    <button type="submit">Save shift</button>
+                    <a class="secondary-button" th:href="@{/shifts}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees | Shift Management System</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/layout :: page(~{::section})}">
+    <section>
+        <div class="page-header">
+            <div>
+                <h1>Employees</h1>
+                <p class="muted">Manage employee records for your business.</p>
+            </div>
+            <a class="button-link" th:href="@{/employees/new}">Add employee</a>
+        </div>
+
+        <div class="card">
+            <div th:if="${#lists.isEmpty(employees)}" class="muted">No employees added yet.</div>
+            <table th:unless="${#lists.isEmpty(employees)}">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Position</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="employee : ${employees}">
+                    <td th:text="${employee.fullName}"></td>
+                    <td th:text="${employee.email}"></td>
+                    <td th:text="${employee.phone}"></td>
+                    <td th:text="${employee.position}"></td>
+                    <td th:text="${employee.status}"></td>
+                    <td class="action-row">
+                        <a th:href="@{'/employees/edit/' + ${employee.id}}">Edit</a>
+                        <form th:action="@{'/employees/delete/' + ${employee.id}}" method="post" onsubmit="return confirm('Delete this employee?');">
+                            <button type="submit" class="link-button danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+</body>
+</html>

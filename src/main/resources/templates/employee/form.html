@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' | Shift Management System'">Employee Form</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/layout :: page(~{::section})}">
+    <section>
+        <div class="page-header">
+            <div>
+                <h1 th:text="${pageTitle}">Employee Form</h1>
+                <p class="muted">Create or update employee details.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <form th:action="@{/employees}" th:object="${employee}" method="post" class="form-grid">
+                <input type="hidden" th:field="*{id}">
+
+                <label>First name
+                    <input type="text" th:field="*{firstName}">
+                    <span class="field-error" th:errors="*{firstName}"></span>
+                </label>
+
+                <label>Last name
+                    <input type="text" th:field="*{lastName}">
+                    <span class="field-error" th:errors="*{lastName}"></span>
+                </label>
+
+                <label>Email
+                    <input type="email" th:field="*{email}">
+                    <span class="field-error" th:errors="*{email}"></span>
+                </label>
+
+                <label>Phone
+                    <input type="text" th:field="*{phone}">
+                </label>
+
+                <label>Position
+                    <input type="text" th:field="*{position}">
+                    <span class="field-error" th:errors="*{position}"></span>
+                </label>
+
+                <label>Status
+                    <select th:field="*{status}">
+                        <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+                    </select>
+                </label>
+
+                <div class="form-actions">
+                    <button type="submit">Save employee</button>
+                    <a class="secondary-button" th:href="@{/employees}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+</body>
+</html>

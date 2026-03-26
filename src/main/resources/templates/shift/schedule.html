@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule | Shift Management System</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/layout :: page(~{::section})}">
+    <section>
+        <div class="page-header">
+            <div>
+                <h1>Schedule</h1>
+                <p class="muted">View all assigned shifts in date order.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div th:if="${#lists.isEmpty(shifts)}" class="muted">No scheduled shifts yet.</div>
+            <table th:unless="${#lists.isEmpty(shifts)}">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Employee</th>
+                    <th>Time</th>
+                    <th>Type</th>
+                    <th>Notes</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="shift : ${shifts}">
+                    <td th:text="${shift.date}"></td>
+                    <td th:text="${shift.employee.fullName}"></td>
+                    <td th:text="${shift.startTime + ' - ' + shift.endTime}"></td>
+                    <td th:text="${shift.shiftType}"></td>
+                    <td th:text="${shift.notes}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="page(content)">
+    <header class="site-header">
+        <div class="container nav-bar">
+            <a th:href="@{/}" class="brand">Shift Management System</a>
+            <nav>
+                <a th:href="@{/}">Dashboard</a>
+                <a th:href="@{/employees}">Employees</a>
+                <a th:href="@{/shifts}">Shifts</a>
+                <a th:href="@{/shifts/schedule}">Schedule</a>
+            </nav>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="secondary-button">Logout</button>
+            </form>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <div th:if="${successMessage}" class="alert success" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="alert error" th:text="${errorMessage}"></div>
+        <div th:replace="${content}"></div>
+    </main>
+</div>
+</body>
+</html>
