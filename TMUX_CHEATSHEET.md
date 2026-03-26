@@ -2,12 +2,12 @@
 
 ## Project location
 ```bash
-cd /home/vboxuser/.openclaw/workspace/projects/shiftmanagementsystem
+cd /path/to/shiftmanagementsystem
 ```
 
 ## Start the app in tmux
 ```bash
-tmux new-session -d -s shiftapp -c /home/vboxuser/.openclaw/workspace/projects/shiftmanagementsystem './mvnw spring-boot:run'
+tmux new-session -d -s shiftapp -c /path/to/shiftmanagementsystem './mvnw spring-boot:run'
 ```
 
 ## Check running tmux sessions
@@ -52,8 +52,13 @@ http://localhost:8080
 ```
 
 ## Login
-- Username: `admin`
-- Password: `Admin123!`
+Use the seeded admin credentials configured in:
+
+```text
+src/main/resources/application.properties
+```
+
+For security, avoid publishing real or default passwords in public documentation.
 
 ## Helpful note
 If `shiftapp` already exists, stop it first before starting a new one:

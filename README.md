@@ -21,12 +21,10 @@ A beginner-friendly Version 1 Spring Boot web app for managing employees, assign
 - PostgreSQL configuration placeholders
 
 ## Default seeded login
-These values come from `src/main/resources/application.properties`:
+A default admin user is seeded from `src/main/resources/application.properties` for local development.
 
-- Username: `admin`
-- Password: `Admin123!`
-
-Change them before using this in a real environment.
+For public safety, the exact default password is not documented here.
+Please review and change the seeded credentials before using the application beyond local testing.
 
 ## Database setup
 Create a PostgreSQL database named:
