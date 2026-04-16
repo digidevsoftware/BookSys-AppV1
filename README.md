@@ -77,8 +77,6 @@ src/main/java/digidevsoftware/shiftmanagementsystem
 
 ## Next recommended improvements
 - add employee search/filtering
-- improve schedule filtering by date and employee
-- add overlapping shift conflict detection
 - add better exception handling
 - move form models to DTOs
 - add employee self-service in a later version
