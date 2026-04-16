@@ -5,11 +5,14 @@ import digidevsoftware.shiftmanagementsystem.model.ShiftType;
 import digidevsoftware.shiftmanagementsystem.service.EmployeeService;
 import digidevsoftware.shiftmanagementsystem.service.ShiftService;
 import jakarta.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/shifts")
@@ -24,8 +27,10 @@ public class ShiftController {
     }
 
     @GetMapping
-    public String listShifts(Model model) {
-        model.addAttribute("shifts", shiftService.findAll());
+    public String listShifts(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                             @RequestParam(required = false) String employeeId,
+                             Model model) {
+        populateShiftList(model, date, parseEmployeeId(employeeId));
         return "shift/list";
     }
 
@@ -84,8 +89,10 @@ public class ShiftController {
     }
 
     @GetMapping("/schedule")
-    public String schedule(Model model) {
-        model.addAttribute("shifts", shiftService.findAll());
+    public String schedule(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                           @RequestParam(required = false) String employeeId,
+                           Model model) {
+        populateShiftList(model, date, parseEmployeeId(employeeId));
         return "shift/schedule";
     }
 
@@ -94,5 +101,19 @@ public class ShiftController {
         model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("shiftTypes", ShiftType.values());
         model.addAttribute("pageTitle", pageTitle);
+    }
+
+    private void populateShiftList(Model model, LocalDate date, Long employeeId) {
+        model.addAttribute("shifts", shiftService.findByFilters(date, employeeId));
+        model.addAttribute("employees", employeeService.findAll());
+        model.addAttribute("selectedDate", date);
+        model.addAttribute("selectedEmployeeId", employeeId);
+    }
+
+    private Long parseEmployeeId(String employeeId) {
+        if (employeeId == null || employeeId.isBlank()) {
+            return null;
+        }
+        return Long.valueOf(employeeId);
     }
 }

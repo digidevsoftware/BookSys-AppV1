@@ -25,6 +25,21 @@ public class ShiftService {
         return shiftRepository.findByDateOrderByStartTimeAsc(date);
     }
 
+    public List<Shift> findByFilters(LocalDate date, Long employeeId) {
+        if (date != null && employeeId != null) {
+            return shiftRepository.findByEmployeeIdAndDateOrderByStartTimeAsc(employeeId, date);
+        }
+        if (date != null) {
+            return shiftRepository.findByDateOrderByStartTimeAsc(date);
+        }
+        if (employeeId != null) {
+            return shiftRepository.findAllByOrderByDateAscStartTimeAsc().stream()
+                    .filter(shift -> shift.getEmployee() != null && employeeId.equals(shift.getEmployee().getId()))
+                    .toList();
+        }
+        return shiftRepository.findAllByOrderByDateAscStartTimeAsc();
+    }
+
     public Optional<Shift> findById(Long id) {
         return shiftRepository.findById(id);
     }

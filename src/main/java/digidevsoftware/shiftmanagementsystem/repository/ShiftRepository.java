@@ -2,9 +2,7 @@ package digidevsoftware.shiftmanagementsystem.repository;
 
 import digidevsoftware.shiftmanagementsystem.model.Shift;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 public interface ShiftRepository extends JpaRepository<Shift, Long> {

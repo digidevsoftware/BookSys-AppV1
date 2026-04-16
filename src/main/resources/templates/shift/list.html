@@ -18,7 +18,30 @@
         </div>
 
         <div class="card">
-            <div th:if="${#lists.isEmpty(shifts)}" class="muted">No shifts added yet.</div>
+            <form th:action="@{/shifts}" method="get" class="filter-bar">
+                <label>
+                    Date
+                    <input type="date" name="date" th:value="${selectedDate}">
+                </label>
+
+                <label>
+                    Employee
+                    <select name="employeeId">
+                        <option value="">All employees</option>
+                        <option th:each="employee : ${employees}"
+                                th:value="${employee.id}"
+                                th:text="${employee.fullName}"
+                                th:selected="${selectedEmployeeId != null and selectedEmployeeId == employee.id}"></option>
+                    </select>
+                </label>
+
+                <div class="filter-actions">
+                    <button type="submit">Apply filters</button>
+                    <a class="secondary-button" th:href="@{/shifts}">Clear</a>
+                </div>
+            </form>
+
+            <div th:if="${#lists.isEmpty(shifts)}" class="muted">No shifts found for the selected filters.</div>
             <table th:unless="${#lists.isEmpty(shifts)}">
                 <thead>
                 <tr>
