@@ -18,6 +18,9 @@
 
         <div class="card">
             <form th:action="@{/shifts}" th:object="${shift}" method="post" class="form-grid">
+                <div th:if="${#fields.hasGlobalErrors()}" class="alert error full-width">
+                    <p th:each="error : ${#fields.globalErrors()}" th:text="${error}"></p>
+                </div>
                 <input type="hidden" th:field="*{id}">
 
                 <label>Date

@@ -44,6 +44,15 @@ public class ShiftController {
             bindingResult.rejectValue("endTime", "invalid.endTime", "End time must be later than start time.");
         }
 
+        if (!bindingResult.hasFieldErrors("employee")
+                && !bindingResult.hasFieldErrors("date")
+                && !bindingResult.hasFieldErrors("startTime")
+                && !bindingResult.hasFieldErrors("endTime")
+                && shift.hasValidTimeRange()
+                && shiftService.hasShiftConflict(shift)) {
+            bindingResult.reject("shiftConflict", "This employee already has an overlapping shift on that date.");
+        }
+
         if (bindingResult.hasErrors()) {
             populateForm(model, shift, shift.getId() == null ? "Add Shift" : "Edit Shift");
             return "shift/form";

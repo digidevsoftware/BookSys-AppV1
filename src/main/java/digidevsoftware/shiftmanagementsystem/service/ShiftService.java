@@ -33,6 +33,20 @@ public class ShiftService {
         return shiftRepository.save(shift);
     }
 
+    public boolean hasShiftConflict(Shift shift) {
+        if (shift.getEmployee() == null || shift.getEmployee().getId() == null || shift.getDate() == null || shift.getStartTime() == null || shift.getEndTime() == null) {
+            return false;
+        }
+
+        List<Shift> sameDayShifts = shift.getId() == null
+                ? shiftRepository.findByEmployeeIdAndDateOrderByStartTimeAsc(shift.getEmployee().getId(), shift.getDate())
+                : shiftRepository.findByEmployeeIdAndDateAndIdNotOrderByStartTimeAsc(shift.getEmployee().getId(), shift.getDate(), shift.getId());
+
+        return sameDayShifts.stream().anyMatch(existing ->
+                shift.getStartTime().isBefore(existing.getEndTime()) && existing.getStartTime().isBefore(shift.getEndTime())
+        );
+    }
+
     public void deleteById(Long id) {
         shiftRepository.deleteById(id);
     }
